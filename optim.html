@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cloud.css">
+    <title>Energy Optimization</title>
+</head>
+<body>
+    <header>
+        <h1>Energy Optimization</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="cloud.html">Home</a></li>
+            <li><a href="monitor.html">Real-time Monitoring</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="energyOptimization">
+            <h2>Energy Optimization Process</h2>
+            <p id="optimizationResult">Optimizing...</p>
+
+            <script src="cloud.js"></script>
+            <script>
+                // Function to generate hypothetical energy data for optimization
+                function generateHypotheticalEnergyData() {
+                    const voltage = 220 + Math.random() * 10; // Simulate voltage between 220 and 230 V
+                    const current = 5 + Math.random() * 2;   // Simulate current between 5 and 7 A
+                    const power = voltage * current;
+
+                    return { voltage, current, power };
+                }
+
+                // Function to simulate the optimization process
+                function optimizeEnergy() {
+                    const energyData = generateHypotheticalEnergyData();
+
+                    // Display the generated energy data
+                    document.getElementById('optimizationResult').innerHTML = `
+                        <p>Current Voltage: ${energyData.voltage.toFixed(2)} V</p>
+                        <p>Current Current: ${energyData.current.toFixed(2)} A</p>
+                        <p>Current Power: ${energyData.power.toFixed(2)} W</p>
+                        <hr>
+                        <p>Optimizing...</p>
+                    `;
+                }
+
+                // Function specific to optimization page
+                function startOptimization() {
+                    // Display initial "Optimizing..." message
+                    optimizeEnergy();
+
+                    // Optimize the energy periodically (replace with actual optimization logic)
+                    setInterval(optimizeEnergy, 10000); // Optimize every 10 seconds
+                }
+
+                // Start optimization when the page is loaded
+                document.addEventListener('DOMContentLoaded', startOptimization);
+            </script>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Cloud Energy Management</p>
+    </footer>
+</body>
+</html>

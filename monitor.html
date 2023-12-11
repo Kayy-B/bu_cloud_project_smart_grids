@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cloud.css">
+    <title>Real-time Monitoring</title>
+    <!-- Include Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Real-time Monitoring</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="cloud.html">Home</a></li>
+            <li><a href="optim.html">Energy Optimization</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="realTimeMonitoring">
+            <!-- Display real-time monitoring elements here -->
+            <h2>Energy Data:</h2>
+            <div id="energyData">Loading...</div>
+
+            <!-- Chart container -->
+            <canvas id="energyChart" width="400" height="200"></canvas>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Cloud Energy Management</p>
+    </footer>
+
+    <script src="cloud.js"></script>
+    <!-- ... (previous HTML code) ... -->
+
+<script>
+    // Hypothetical energy data object
+    let energyData = {
+        voltage: 220,
+        current: 5,
+        power: 1100
+    };
+
+    // Arrays to store historical data for the chart
+    let voltageHistory = [];
+    let currentHistory = [];
+    let powerHistory = [];
+
+    // Initialize Chart.js
+    const chartCanvas = document.getElementById('energyChart').getContext('2d');
+    const energyChart = new Chart(chartCanvas, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [
+                {
+                    label: 'Voltage',
+                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    data: voltageHistory,
+                    fill: false,
+                    pointRadius: 3
+                },
+                {
+                    label: 'Current',
+                    borderColor: 'rgb(75, 192, 192)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    data: currentHistory,
+                    fill: false,
+                    pointRadius: 3
+                },
+                {
+                    label: 'Power',
+                    borderColor: 'rgb(255, 205, 86)',
+                    backgroundColor: 'rgba(255, 205, 86, 0.2)',
+                    data: powerHistory,
+                    fill: false,
+                    pointRadius: 3
+                }
+            ]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    // Function to update and display energy data
+    function updateEnergyData() {
+        // Simulate data update (replace this with your actual data fetching logic)
+        energyData.voltage += Math.random() * 10 - 5; // Random voltage change between -5 and 5
+        energyData.current += Math.random() * 2 - 1;  // Random current change between -1 and 1
+        energyData.power = energyData.voltage * energyData.current;
+
+        // Display the updated data
+        document.getElementById('energyData').innerHTML = `
+            Voltage: ${energyData.voltage.toFixed(2)} V<br>
+            Current: ${energyData.current.toFixed(2)} A<br>
+            Power: ${energyData.power.toFixed(2)} W
+        `;
+
+        // Add data to the historical arrays
+        voltageHistory.push(energyData.voltage);
+        currentHistory.push(energyData.current);
+        powerHistory.push(energyData.power);
+
+        // Limit the number of data points to show (e.g., keep the last 20 points)
+        const maxDataPoints = 20;
+        if (voltageHistory.length > maxDataPoints) {
+            voltageHistory.shift();
+            currentHistory.shift();
+            powerHistory.shift();
+        }
+
+        // Update the chart
+        energyChart.update();
+    }
+
+    // Function specific to real-time monitoring page
+    function startMonitoring() {
+        // Display initial data
+        updateEnergyData();
+
+        // Update the data every 5 seconds (5000 milliseconds)
+        setInterval(updateEnergyData, 5000);
+    }
+
+    // Start monitoring when the page is loaded
+    document.addEventListener('DOMContentLoaded', startMonitoring);
+</script>
+
+<!-- ... (remaining HTML code) ... -->
+
+</body>
+</html>
